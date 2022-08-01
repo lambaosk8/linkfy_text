@@ -176,11 +176,35 @@ TextSpan _linkify({
     ));
     if (links.isNotEmpty) {
       final match = links.removeAt(0);
-      final link = Link.fromMatch(match);
+      Link link = Link.fromMatch(match);
+      if (link.type == LinkType.userTag) {
+        String userTagRegExp = r'(?<![\w@])@([\w@]+(?:[.!][\w@]+)*)';
+        RegExpMatch? usernameMatch =
+        RegExp(userTagRegExp).firstMatch(link.value ?? '');
+        if (usernameMatch != null) {
+          link.displayString =
+              usernameMatch.input.substring(usernameMatch.start, usernameMatch.end);
+        }
+
+        String hrefRegExp = r'''href=(["'])(.*?)\1''';
+        RegExpMatch? hrefMatch = RegExp(hrefRegExp).firstMatch(link.value ?? '');
+        if (hrefMatch != null) {
+          String hrefFullString =
+          hrefMatch.input.substring(hrefMatch.start, hrefMatch.end);
+
+          RegExpMatch? userUrlMatch =
+          RegExp(r'''(?:'|").*(?:'|")''').firstMatch(hrefFullString);
+          if (userUrlMatch != null) {
+            link.value = userUrlMatch.input
+                .substring(userUrlMatch.start + 1, userUrlMatch.end - 1);
+          }
+        }
+      }
+
       // add the link
       spans.add(
         TextSpan(
-          text: link.value,
+          text: link.displayString,
           style: customLinkStyles?[link.type] ?? linkStyle,
           recognizer: TapGestureRecognizer()
             ..onTap = () {
