@@ -4,7 +4,7 @@ String urlRegExp = r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+';
 
 String hashtagRegExp = r'(#+[a-zA-Z0-9(_)]{1,})';
 
-String userTagRegExp = r'(?<![\w@])@([\w@]+(?:[.!][\w@]+)*)';
+String userTagRegExp = r'(<a[\s]+([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>)';
 
 String emailRegExp =
     r"([a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+)";
