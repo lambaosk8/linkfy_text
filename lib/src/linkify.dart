@@ -177,7 +177,7 @@ TextSpan _linkify({
     if (links.isNotEmpty) {
       final match = links.removeAt(0);
       Link link = Link.fromMatch(match);
-      if (link.type == LinkType.userTag) {
+      if (link.type == LinkType.userTag || link.type == LinkType.email) {
         String userTagRegExp = r'(?<![\w@])@([\w@]+(?:[.!][\w@]+)*)';
         RegExpMatch? usernameMatch =
         RegExp(userTagRegExp).firstMatch(link.value ?? '');
