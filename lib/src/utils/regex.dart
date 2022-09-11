@@ -1,6 +1,6 @@
 import 'package:linkfy_text/src/enum.dart';
 
-String urlRegExp = r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+';
+String urlRegExp = r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.,&]+';
 
 String hashtagRegExp = r'(#+[a-zA-Z0-9(_)]{1,})';
 
